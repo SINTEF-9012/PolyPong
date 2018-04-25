@@ -6,8 +6,8 @@ import java.util.TimerTask;
 public class Main {
 
 	public static void main(String[] args) {
-		final int tick = 50;
-		final GameState state = new GameState(3);
+		final int tick = 25;
+		final GameState state = new GameState(12);
 		
 		// -- Run game tick --
 		new Timer().scheduleAtFixedRate(new TimerTask() {
