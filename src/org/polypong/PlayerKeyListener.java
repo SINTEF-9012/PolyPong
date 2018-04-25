@@ -32,7 +32,7 @@ public class PlayerKeyListener implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		int keyCode = e.getKeyCode();
+		final int keyCode = e.getKeyCode();
 		if (keyCode == leftKey) {
 			player.updatePlayer(-0.05);
 		} else if (keyCode == rightKey) {
@@ -41,6 +41,12 @@ public class PlayerKeyListener implements KeyListener {
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {}
+	public void keyReleased(KeyEvent e) {
+		final int keyCode = e.getKeyCode();
+		if (keyCode == leftKey || keyCode == rightKey) {
+			player.updatePlayer(0);
+		}
+		
+	}
 
 }

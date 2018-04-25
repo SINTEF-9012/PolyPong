@@ -15,6 +15,7 @@ public class PlayerState {
 	int playerID = 0;
 	double playerPos = 0.5;
 	double playerWidth = 0.4;
+	double dx = 0;
 	
 	float playerX = 50;
 	float playerY = 0;
@@ -30,16 +31,17 @@ public class PlayerState {
 	}
 	
 	protected void updatePlayer(double delta) {
-		playerPos += delta;
+		dx = delta;
+		//TODO: update player view
+	}
+	
+	public void onTick() {
+		playerPos += dx;
 		if (playerPos-playerWidth/2 < 0) {
 			playerPos = playerWidth/2;
 		} else if (playerPos+playerWidth/2 > 1) {
 			playerPos = 1-playerWidth/2;
 		}
-		//TODO: update player view
-	}
-	
-	public void onTick() {
 		view.draw(game);
 	}
 }
