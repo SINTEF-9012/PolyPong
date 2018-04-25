@@ -5,13 +5,26 @@ import java.awt.event.KeyListener;
 
 public class PlayerKeyListener implements KeyListener {
 
-	final int leftKey = KeyEvent.VK_LEFT;
-	final int rightKey = KeyEvent.VK_RIGHT;
+	final int leftKey;
+	final int rightKey;
 
 	final PlayerState player;
 
 	public PlayerKeyListener(PlayerState player) {
 		this.player = player;
+		switch (player.playerID) {
+			case 0:
+				this.leftKey = KeyEvent.VK_LEFT;
+				this.rightKey = KeyEvent.VK_RIGHT;
+				break;
+			case 1:
+				this.leftKey = KeyEvent.VK_A;
+				this.rightKey = KeyEvent.VK_D;
+				break;
+			default:
+				this.leftKey = KeyEvent.VK_NUMPAD4;
+				this.rightKey = KeyEvent.VK_NUMPAD6;
+		}
 	}
 
 	@Override
@@ -20,13 +33,10 @@ public class PlayerKeyListener implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
-		switch(keyCode) { 
-		case leftKey:
-			player.updatePlayer(-8, 0);
-			break;
-		case rightKey :
-			player.updatePlayer(8, 0);
-			break;
+		if (keyCode == leftKey) {
+			player.updatePlayer(-0.05);
+		} else if (keyCode == rightKey) {
+			player.updatePlayer(0.05);
 		}
 	}
 

@@ -5,12 +5,16 @@ public class PlayerState {
 	final GameState game;
 	final PlayerWindow view; 
 	
-	public PlayerState(GameState game, int numberOfPlayers) {
+	public PlayerState(GameState game, int playerID, int numberOfPlayers) {
 		this.game = game;
+		this.playerID = playerID;
 		this.view = new PlayerWindow(100, 100, 5, playerID, numberOfPlayers);
+		this.view.setupTransform(numberOfPlayers, playerID);
 	}
 	
 	int playerID = 0;
+	double playerPos = 0.5;
+	double playerWidth = 0.4;
 	
 	float playerX = 50;
 	float playerY = 0;
@@ -25,11 +29,17 @@ public class PlayerState {
 		ballY = ballY + ballDY;	
 	}
 	
-	protected void updatePlayer(float dx, float dy) {
-		game.updatePlayer(playerID, dx, dy);
-		playerX = playerX + dx;
-		playerY = playerY + dy;	
+	protected void updatePlayer(double delta) {
+		playerPos += delta;
+		if (playerPos-playerWidth/2 < 0) {
+			playerPos = playerWidth/2;
+		} else if (playerPos+playerWidth/2 > 1) {
+			playerPos = 1-playerWidth/2;
+		}
 		//TODO: update player view
 	}
-
+	
+	public void onTick() {
+		view.draw(game);
+	}
 }

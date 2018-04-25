@@ -18,7 +18,16 @@ public class GameWindow extends Window {
 		this.frame.setLocation(location);
 	}
 	
+	@Override
+	public void setupTransform(int numberOfPlayers) {
+		super.setupTransform(numberOfPlayers);
+		
+		final double maxDim = Math.max(width, height)/2;
+		transform.translate(width/2, height/2);
+		transform.scale(maxDim/R*.9, maxDim/R*.9);
+	}
+	
 	public void addKeyListener(KeyListener l) {
-		this.canvas.addKeyListener(l);
+		this.frame.addKeyListener(l);
 	}
 }
