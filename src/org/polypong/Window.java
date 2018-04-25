@@ -130,7 +130,7 @@ public abstract class Window {
 		
 		// Draw players
 		for (int i = 0; i < numberOfPlayers; i++) {
-			switch (i) {
+			switch (i % 3) {
 			case 0:
 				this.graphics.setColor(Color.RED);
 				break;

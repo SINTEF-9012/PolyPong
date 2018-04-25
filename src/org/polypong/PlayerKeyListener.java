@@ -8,11 +8,14 @@ public class PlayerKeyListener implements KeyListener {
 	final int leftKey;
 	final int rightKey;
 
+	boolean left = false;
+	boolean right = false;
+	
 	final PlayerState player;
 
 	public PlayerKeyListener(PlayerState player) {
 		this.player = player;
-		switch (player.playerID) {
+		switch (player.playerID % 3) {
 			case 0:
 				this.leftKey = KeyEvent.VK_LEFT;
 				this.rightKey = KeyEvent.VK_RIGHT;
@@ -34,8 +37,14 @@ public class PlayerKeyListener implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		final int keyCode = e.getKeyCode();
 		if (keyCode == leftKey) {
-			player.updatePlayer(-0.05);
+			left = true;
 		} else if (keyCode == rightKey) {
+			right = true;
+		}
+		
+		if (left && !right) {
+			player.updatePlayer(-0.05);
+		} else if (right && !left) {
 			player.updatePlayer(0.05);
 		}
 	}
@@ -43,7 +52,12 @@ public class PlayerKeyListener implements KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		final int keyCode = e.getKeyCode();
-		if (keyCode == leftKey || keyCode == rightKey) {
+		if (keyCode == leftKey) {
+			left = false;
+		} else if (keyCode == rightKey) {
+			right = false;
+		}		
+		if (!left && !right) {
 			player.updatePlayer(0);
 		}
 		

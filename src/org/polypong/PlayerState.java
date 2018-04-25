@@ -32,7 +32,6 @@ public class PlayerState {
 	
 	protected void updatePlayer(double delta) {
 		dx = delta;
-		//TODO: update player view
 	}
 	
 	public void onTick() {

@@ -17,10 +17,6 @@ public class GameState {
 		mainView.focus();
 	}
 	
-	protected void updatePlayer(int playerID, float dx, float dy) {
-		//TODO: some math and update main view
-	}
-	
 	public void onTick() {
 		for(PlayerState player : players) {
 			//player.updateBall();
