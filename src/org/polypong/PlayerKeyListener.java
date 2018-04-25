@@ -34,13 +34,20 @@ public class PlayerKeyListener implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
 		if (keyCode == leftKey) {
-			player.updatePlayer(-0.05);
+			player.playerSpeed = -0.05;
 		} else if (keyCode == rightKey) {
-			player.updatePlayer(0.05);
+			player.playerSpeed = 0.05;
 		}
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {}
+	public void keyReleased(KeyEvent e) {
+		int keyCode = e.getKeyCode();
+		if (keyCode == leftKey) {
+			player.playerSpeed = 0;
+		} else if (keyCode == rightKey) {
+			player.playerSpeed = 0;
+		}
+	}
 
 }
