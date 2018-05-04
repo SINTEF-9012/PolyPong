@@ -9,7 +9,7 @@ public class PlayerState {
 		this.game = game;
 		this.playerID = playerID;
 		this.view = new PlayerWindow(100, 100, 5, playerID, numberOfPlayers);
-		this.view.setupTransform(numberOfPlayers, playerID);
+		this.view.setupTransform(game, playerID);
 	}
 	
 	int playerID = 0;

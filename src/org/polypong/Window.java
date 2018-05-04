@@ -8,6 +8,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.event.WindowEvent;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
@@ -22,10 +23,12 @@ public abstract class Window {
 	protected int width;
 	protected int height;
 	
+	/*
 	protected int numberOfPlayers;
 	protected double R;
 	protected double theta;
 	protected double phi;
+	*/
 	
 	protected Window(int width, int height, int scale, String title, boolean exitOnClose) {
 		this.width = width;
@@ -75,12 +78,7 @@ public abstract class Window {
 		return new Point(mode.getWidth(), mode.getHeight());
 	}
 	
-	public void setupTransform(int numberOfPlayers) {
-		this.numberOfPlayers = numberOfPlayers;
-		this.R = 1/(2*Math.sin(Math.PI/(numberOfPlayers*2)));
-		this.theta = Math.PI/numberOfPlayers;
-		this.phi = -Math.PI/2-theta/2;
-		
+	public void setupTransform(GameState state) {
 		this.transform = new AffineTransform();
 		this.transform.translate(0, height-1); // Move origin to bottom-left
 		this.transform.scale(1, -1); // Flip so we get a right-hand coordinate system
@@ -96,11 +94,11 @@ public abstract class Window {
 		this.graphics.drawLine((int)line[0], (int)line[1], (int)line[2], (int)line[3]);
 	}
 	
-	protected void calculateSegment(double[] line, int i) {
-		line[0] = R*Math.cos(i*theta+phi);
-		line[1] = R*Math.sin(i*theta+phi);
-		line[2] = R*Math.cos((i+1)*theta+phi);
-		line[3] = R*Math.sin((i+1)*theta+phi);
+	protected void calculateSegment(double[] line, Point2D.Double[] polygon, int i) {
+		line[0] = polygon[i].x;
+		line[1] = polygon[i].y;
+		line[2] = polygon[i+1].x;
+		line[3] = polygon[i+1].y;
 	}
 	
 	protected void calculatePaddle(double[] line, double pos, double width) {
@@ -123,13 +121,13 @@ public abstract class Window {
 		
 		// Draw walls
 		this.graphics.setColor(Color.WHITE);
-		for (int i = 0; i < numberOfPlayers; i++) {
-			calculateSegment(points, i*2+1);
+		for (int i = 0; i < state.numberOfPlayers; i++) {
+			calculateSegment(points, state.polygon, i*2+1);
 			transformAndDrawLine(points);
 		}
 		
 		// Draw players
-		for (int i = 0; i < numberOfPlayers; i++) {
+		for (int i = 0; i < state.numberOfPlayers; i++) {
 			switch (i % 3) {
 			case 0:
 				this.graphics.setColor(Color.RED);
@@ -141,7 +139,7 @@ public abstract class Window {
 				this.graphics.setColor(Color.BLUE);
 			}
 			
-			calculateSegment(points, i*2);
+			calculateSegment(points, state.polygon, i*2);
 			PlayerState player = state.players.get(i);
 			calculatePaddle(points, player.playerPos, player.playerWidth);
 			transformAndDrawLine(points);

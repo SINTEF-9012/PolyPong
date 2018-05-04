@@ -19,12 +19,12 @@ public class GameWindow extends Window {
 	}
 	
 	@Override
-	public void setupTransform(int numberOfPlayers) {
-		super.setupTransform(numberOfPlayers);
+	public void setupTransform(GameState state) {
+		super.setupTransform(state);
 		
 		final double maxDim = Math.max(width, height)/2;
 		transform.translate(width/2, height/2);
-		transform.scale(maxDim/R*.9, maxDim/R*.9);
+		transform.scale(maxDim/state.R*.9, maxDim/state.R*.9);
 	}
 	
 	public void addKeyListener(KeyListener l) {

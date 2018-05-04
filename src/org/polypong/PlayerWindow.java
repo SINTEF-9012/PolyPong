@@ -16,12 +16,12 @@ public class PlayerWindow extends Window {
 		this.frame.setLocation(location);
 	}
 	
-	public void setupTransform(int numberOfPlayers, int playerID) {
-		super.setupTransform(numberOfPlayers);
+	public void setupTransform(GameState state, int playerID) {
+		super.setupTransform(state);
 		
 		double playerPos[] = new double[4];
-		calculateSegment(playerPos, 0);
-		double playerRot = -2*Math.PI/numberOfPlayers*playerID;
+		calculateSegment(playerPos, state.polygon, 0);
+		double playerRot = -2*Math.PI/state.numberOfPlayers*playerID;
 		double scale = width*0.9;
 		
 		transform.translate(-playerPos[0]*scale+width*0.05,-playerPos[1]*scale);
