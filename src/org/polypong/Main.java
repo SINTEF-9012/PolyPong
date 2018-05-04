@@ -7,7 +7,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		final int tick = 25;
-		final GameState state = new GameState(12);
+		final GameState state = new GameState(4);
 		
 		// -- Run game tick --
 		new Timer().scheduleAtFixedRate(new TimerTask() {

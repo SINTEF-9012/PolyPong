@@ -35,6 +35,15 @@ public class PlayerState {
 		//TODO: update player view
 	}
 	
+	public boolean isOutsidePaddle(double segmentPos) {
+		// SegmentPos is [0-1] along the player segment
+		if (segmentPos < playerPos-playerWidth/2)
+			return true;
+		if (segmentPos > playerPos+playerWidth/2)
+			return true;
+		return false;
+	}
+	
 	public void onTick() {
 		playerPos += playerSpeed;
 		if (playerPos-playerWidth/2 < 0) {

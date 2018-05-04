@@ -119,13 +119,13 @@ public abstract class Window {
 	public void draw(GameState state) {
 		this.clear();
 		
-		double line[] = new double[4];
+		double points[] = new double[4];
 		
 		// Draw walls
 		this.graphics.setColor(Color.WHITE);
 		for (int i = 0; i < numberOfPlayers; i++) {
-			calculateSegment(line, i*2+1);
-			transformAndDrawLine(line);
+			calculateSegment(points, i*2+1);
+			transformAndDrawLine(points);
 		}
 		
 		// Draw players
@@ -141,10 +141,19 @@ public abstract class Window {
 				this.graphics.setColor(Color.BLUE);
 			}
 			
-			calculateSegment(line, i*2);
+			calculateSegment(points, i*2);
 			PlayerState player = state.players.get(i);
-			calculatePaddle(line, player.playerPos, player.playerWidth);
-			transformAndDrawLine(line);
+			calculatePaddle(points, player.playerPos, player.playerWidth);
+			transformAndDrawLine(points);
+		}
+		
+		// Draw balls
+		for (BallState ball : state.balls) {
+			this.graphics.setColor(Color.CYAN);
+			points[0] = ball.posX;
+			points[1] = ball.posY;
+			this.transform.transform(points, 0, points, 0, 1);
+			this.graphics.drawOval((int)points[0], (int)points[1], 2, 2);
 		}
 		
 		this.canvas.repaint();
